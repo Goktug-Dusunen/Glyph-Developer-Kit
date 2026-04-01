@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Delivery Glyph</string>
+    <string name="title_settings">Ayarlar</string>
+    <string name="title_history">Bildirim Geçmişi</string>
+    <string name="label_permission_active">Bildirim izni: Aktif ✓</string>
+    <string name="label_permission_needed">Bildirim izni gerekli</string>
+    <string name="btn_grant_permission">İzin Ver</string>
+    <string name="btn_open_settings">İzin Ayarlarını Aç</string>
+    <string name="btn_settings">Ayarlar</string>
+    <string name="btn_history">Geçmiş</string>
+    <string name="empty_history">Henüz bildirim geçmişi yok.</string>
+</resources>
