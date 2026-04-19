@@ -1,0 +1,62 @@
+name: Build & Release APK
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
+      - name: Copy Glyph SDK to libs
+        run: |
+          mkdir -p DeliveryGlyph/app/libs
+          cp sdk/glyph-matrix-sdk-2.0.aar DeliveryGlyph/app/libs/
+
+      - name: Build Debug APK
+        working-directory: DeliveryGlyph
+        run: gradle assembleDebug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeliveryGlyph-debug-${{ github.sha }}
+          path: DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      # Sadece tag push'larında (v1.0.0 gibi) release oluştur
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Delivery Glyph ${{ github.ref_name }}
+          body: |
+            ## Delivery Glyph ${{ github.ref_name }}
+
+            APK dosyasını indirip Nothing telefonuna yükleyebilirsin.
+
+            ### Kurulum
+            1. APK'yı telefona indir
+            2. Yükle (bilinmeyen kaynaklara izin gerekebilir)
+            3. Uygulamayı aç → **Grant Permission** → Notification Access'i etkinleştir
+          files: DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk
+          draft: false
+          prerelease: false
