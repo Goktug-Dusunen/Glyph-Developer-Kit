@@ -22,43 +22,48 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.7'
+          cache: gradle
 
       - name: Copy Glyph SDK to libs
         run: |
           mkdir -p DeliveryGlyph/app/libs
           cp sdk/glyph-matrix-sdk-2.0.aar DeliveryGlyph/app/libs/
 
+      - name: Make gradlew executable
+        run: chmod +x DeliveryGlyph/gradlew 2>/dev/null || true
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
       - name: Build Debug APK
         working-directory: DeliveryGlyph
-        run: gradle assembleDebug
+        run: gradle assembleDebug --no-daemon
+
+      - name: Verify APK exists
+        run: ls -lh DeliveryGlyph/app/build/outputs/apk/debug/
+
+      - name: Rename APK
+        run: |
+          cp DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk \
+             DeliveryGlyph/app/build/outputs/apk/debug/DeliveryGlyph-${{ github.ref_name }}.apk 2>/dev/null || \
+          cp DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk \
+             DeliveryGlyph/app/build/outputs/apk/debug/DeliveryGlyph-debug.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DeliveryGlyph-debug-${{ github.sha }}
+          name: DeliveryGlyph-debug
           path: DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
-      # Sadece tag push'larında (v1.0.0 gibi) release oluştur
-      - name: Create GitHub Release
+      - name: Upload to GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          name: Delivery Glyph ${{ github.ref_name }}
-          body: |
-            ## Delivery Glyph ${{ github.ref_name }}
-
-            APK dosyasını indirip Nothing telefonuna yükleyebilirsin.
-
-            ### Kurulum
-            1. APK'yı telefona indir
-            2. Yükle (bilinmeyen kaynaklara izin gerekebilir)
-            3. Uygulamayı aç → **Grant Permission** → Notification Access'i etkinleştir
-          files: DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk
-          draft: false
-          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ github.ref_name }} \
+            "DeliveryGlyph/app/build/outputs/apk/debug/app-debug.apk#DeliveryGlyph-${{ github.ref_name }}.apk" \
+            --clobber \
+            --repo ${{ github.repository }}
