@@ -3,15 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
 
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Henüz bildirim geçmişi yok."
-        android:textSize="16sp"
-        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:fontFamily="monospace"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,8 +25,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

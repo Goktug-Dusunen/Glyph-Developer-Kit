@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp"
-    android:gravity="center_vertical">
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_card"
+    android:layout_marginBottom="8dp">
 
-    <!-- Sol: uygulama adı + bildirim başlığı -->
+    <!-- Sol: uygulama + bildirim -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,16 +19,20 @@
             android:id="@+id/tvAppLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="#555555" />
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.1" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginTop="2dp" />
+            android:textSize="13sp"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
     </LinearLayout>
 
     <!-- Sağ: zaman + durum -->
@@ -34,26 +40,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="end">
+        android:gravity="end"
+        android:layout_marginStart="12dp">
 
         <TextView
             android:id="@+id/tvTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="#AAAAAA" />
+            android:textSize="10sp"
+            android:textColor="@color/text_hint"
+            android:fontFamily="monospace" />
 
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="11sp"
+            android:textColor="@color/text_primary"
+            android:fontFamily="monospace"
             android:layout_marginTop="4dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:background="@drawable/bg_status_chip" />
     </LinearLayout>
 

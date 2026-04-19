@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        android:theme="@style/Theme.DeliveryGlyph">
 
         <!-- Nothing Glyph API Key — debug için "test" kullanılabilir -->
         <meta-data
@@ -34,12 +34,14 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.DeliveryGlyph.ActionBar" />
 
         <activity
             android:name=".HistoryActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.DeliveryGlyph.ActionBar" />
 
         <service
             android:name=".DeliveryNotificationListener"

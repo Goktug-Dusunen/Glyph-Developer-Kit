@@ -1,124 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="40dp">
 
         <!-- ── Uygulamalar ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Uygulamalar"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:textColor="#888888"
-            android:letterSpacing="0.1"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:text="UYGULAMALAR"
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="10dp" />
 
-        <!-- Built-in switch'ler buraya programmatik eklenir -->
         <LinearLayout
             android:id="@+id/llAppSwitches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#F8F8F8"
-            android:padding="8dp" />
+            android:background="@drawable/bg_card"
+            android:padding="4dp"
+            android:layout_marginBottom="24dp" />
 
         <!-- ── Özel Uygulamalar ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Özel Uygulamalar"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:textColor="#888888"
-            android:letterSpacing="0.1"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="4dp" />
+            android:text="ÖZEL UYGULAMALAR"
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="10dp" />
 
         <LinearLayout
             android:id="@+id/llCustomApps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#F8F8F8"
-            android:padding="8dp" />
+            android:background="@drawable/bg_card"
+            android:padding="4dp"
+            android:layout_marginBottom="8dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btnAddApp"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="+ Uygulama Ekle" />
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="+ Uygulama Ekle"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:background="@drawable/bg_btn_secondary"
+            android:layout_marginBottom="24dp" />
 
         <!-- ── Animasyon Hızı ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Animasyon Hızı"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:textColor="#888888"
-            android:letterSpacing="0.1"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="4dp" />
+            android:text="YANIP SÖNME HIZI"
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="10dp" />
 
         <RadioGroup
             android:id="@+id/rgBlinkSpeed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#F8F8F8"
-            android:padding="8dp">
+            android:background="@drawable/bg_card"
+            android:padding="4dp"
+            android:layout_marginBottom="24dp">
 
             <RadioButton
                 android:id="@+id/rbFast"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Hızlı (kurye kapıda!)" />
+                android:layout_height="52dp"
+                android:paddingStart="16dp"
+                android:text="Hızlı"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:buttonTint="@color/accent_white" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/bg_divider" android:layout_marginHorizontal="16dp" />
 
             <RadioButton
                 android:id="@+id/rbNormal"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="52dp"
+                android:paddingStart="16dp"
                 android:text="Normal"
-                android:checked="true" />
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:checked="true"
+                android:buttonTint="@color/accent_white" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/bg_divider" android:layout_marginHorizontal="16dp" />
 
             <RadioButton
                 android:id="@+id/rbSlow"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Yavaş (sessiz ortam)" />
+                android:layout_height="52dp"
+                android:paddingStart="16dp"
+                android:text="Yavaş"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:buttonTint="@color/accent_white" />
         </RadioGroup>
 
-        <!-- ── Geçmiş ── -->
+        <!-- ── Diğer ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Diğer"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:textColor="#888888"
-            android:letterSpacing="0.1"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="4dp" />
+            android:text="DİĞER"
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:letterSpacing="0.2"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="10dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btnClearHistory"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:gravity="center"
             android:text="Geçmişi Temizle"
-            android:textColor="#CC0000" />
-
-        <View android:layout_width="match_parent" android:layout_height="32dp" />
+            android:textSize="13sp"
+            android:textColor="@color/btn_danger_text"
+            android:background="@drawable/bg_card" />
 
     </LinearLayout>
 </ScrollView>

@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -24,8 +23,9 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_history)
 
         supportActionBar?.apply {
-            title = "Bildirim Geçmişi"
+            title = "Geçmiş"
             setDisplayHomeAsUpEnabled(true)
+            elevation = 0f
         }
 
         rvHistory = findViewById(R.id.rvHistory)
@@ -49,11 +49,6 @@ class HistoryActivity : AppCompatActivity() {
             rvHistory.visibility = View.VISIBLE
             rvHistory.layoutManager = LinearLayoutManager(this)
             rvHistory.adapter = HistoryAdapter(events)
-            if (rvHistory.itemDecorationCount == 0) {
-                rvHistory.addItemDecoration(
-                    DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-                )
-            }
         }
     }
 

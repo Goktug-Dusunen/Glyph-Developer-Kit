@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DeliveryGlyph" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="colorPrimary">@color/accent_white</item>
+        <item name="colorOnPrimary">@color/bg_primary</item>
+        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/bg_surface_elevated</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="Theme.DeliveryGlyph.ActionBar" parent="Theme.DeliveryGlyph">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="actionBarStyle">@style/DeliveryGlyph.ActionBar</item>
+    </style>
+
+    <style name="DeliveryGlyph.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/bg_primary</item>
+        <item name="titleTextStyle">@style/DeliveryGlyph.ActionBar.Title</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="DeliveryGlyph.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+</resources>

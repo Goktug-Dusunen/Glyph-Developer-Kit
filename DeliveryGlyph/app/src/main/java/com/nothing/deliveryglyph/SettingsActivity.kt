@@ -29,6 +29,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.apply {
             title = "Ayarlar"
             setDisplayHomeAsUpEnabled(true)
+            elevation = 0f
         }
 
         llAppSwitches = findViewById(R.id.llAppSwitches)
@@ -162,21 +163,30 @@ class SettingsActivity : AppCompatActivity() {
         onChange: (Boolean) -> Unit,
         onRemove: (() -> Unit)? = null
     ): View {
+        val dp = resources.displayMetrics.density
+
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
-            val pad = (4 * resources.displayMetrics.density).toInt()
-            setPadding(pad, pad, pad, pad)
+            val padV = (14 * dp).toInt()
+            val padH = (16 * dp).toInt()
+            setPadding(padH, padV, padH, padV)
         }
 
         val tv = TextView(this).apply {
             text = label
             textSize = 14f
+            setTextColor(0xFFFFFFFF.toInt())
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
 
         val sw = SwitchCompat(this).apply {
             isChecked = checked
+            trackTintList = android.content.res.ColorStateList.valueOf(0xFF2E2E2E.toInt())
+            thumbTintList = android.content.res.ColorStateList(
+                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
+                intArrayOf(0xFFFFFFFF.toInt(), 0xFF666666.toInt())
+            )
             setOnCheckedChangeListener { _, isChecked -> onChange(isChecked) }
         }
 
@@ -186,9 +196,9 @@ class SettingsActivity : AppCompatActivity() {
         if (removable && onRemove != null) {
             val btnRemove = TextView(this).apply {
                 text = "✕"
-                textSize = 16f
-                setTextColor(0xFFCC0000.toInt())
-                setPadding(16, 0, 8, 0)
+                textSize = 14f
+                setTextColor(0xFFF87171.toInt())
+                setPadding((16 * dp).toInt(), 0, 0, 0)
                 setOnClickListener { onRemove() }
             }
             row.addView(btnRemove)

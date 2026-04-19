@@ -1,108 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="32dp">
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delivery Glyph"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp" />
-
-    <TextView
-        android:id="@+id/tvDevice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:textColor="#888888"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp" />
-
-    <Button
-        android:id="@+id/btnGrantPermission"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="İzin Ver" />
-
-    <!-- Navigasyon butonları -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
-
-        <Button
-            android:id="@+id/btnSettings"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:text="Ayarlar" />
-
-        <Button
-            android:id="@+id/btnHistory"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:text="Geçmiş" />
-    </LinearLayout>
-
-    <!-- Glyph Aşama Açıklaması -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="32dp"
-        android:background="#F5F5F5"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="48dp"
+        android:paddingBottom="32dp">
 
-        <TextView
+        <!-- ── Header ── -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Glyph Aşamaları"
-            android:textStyle="bold"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELIVERY"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.3"
+                android:fontFamily="monospace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Glyph"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:letterSpacing="-0.02" />
+
+            <TextView
+                android:id="@+id/tvDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:fontFamily="monospace"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- ── İzin Durumu Kartı ── -->
+        <LinearLayout
+            android:id="@+id/cardPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_permission_inactive"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BİLDİRİM ERİŞİMİ"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_secondary"
+                    android:letterSpacing="0.2"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/statusDot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="#F87171"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+        <!-- ── İzin Butonu ── -->
+        <TextView
+            android:id="@+id/btnGrantPermission"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="İzin Ver"
             android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/btn_primary_text"
+            android:background="@drawable/bg_btn_primary"
             android:layout_marginBottom="8dp" />
 
+        <!-- ── Navigasyon ── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:id="@+id/btnSettings"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ayarlar"
+                android:textSize="13sp"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_btn_secondary"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/btnHistory"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Geçmiş"
+                android:textSize="13sp"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_btn_secondary"
+                android:layout_marginStart="6dp" />
+        </LinearLayout>
+
+        <!-- ── Glyph Aşamaları ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:lineSpacingMultiplier="1.6"
+            android:text="GLYPH AŞAMALARI"
+            android:textSize="10sp"
+            android:textColor="@color/text_secondary"
+            android:letterSpacing="0.2"
             android:fontFamily="monospace"
-            android:text="Onaylandı    → %25 doluluk\nHazırlanıyor → %50 doluluk\nYolda        → %75 doluluk\nKapıda       → Yanıp söner" />
+            android:layout_marginBottom="12dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:layout_marginBottom="32dp">
+
+            <include layout="@layout/item_stage"
+                android:id="@+id/stageConfirmed" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/bg_divider" android:layout_marginVertical="10dp" />
+
+            <include layout="@layout/item_stage"
+                android:id="@+id/stagePreparing" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/bg_divider" android:layout_marginVertical="10dp" />
+
+            <include layout="@layout/item_stage"
+                android:id="@+id/stageOnTheWay" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/bg_divider" android:layout_marginVertical="10dp" />
+
+            <include layout="@layout/item_stage"
+                android:id="@+id/stageAtDoor" />
+        </LinearLayout>
+
+        <!-- ── Footer ── -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="by Göktuğ Düşünen"
             android:textSize="11sp"
-            android:textColor="#AAAAAA"
-            android:layout_marginTop="8dp"
-            android:text="Phone (4a): A kanalı (6 LED)\nDiğer modeller: C veya D progress bar" />
+            android:textColor="@color/text_hint"
+            android:fontFamily="monospace" />
+
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="11sp"
-        android:textColor="#CCCCCC"
-        android:layout_marginTop="24dp"
-        android:text="by Gdusunen" />
-
-</LinearLayout>
+</ScrollView>

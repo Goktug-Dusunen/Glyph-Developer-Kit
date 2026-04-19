@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background layers -->
+    <color name="bg_primary">#0D0D0D</color>
+    <color name="bg_surface">#141414</color>
+    <color name="bg_surface_elevated">#1C1C1C</color>
+    <color name="bg_divider">#242424</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#888888</color>
+    <color name="text_hint">#444444</color>
+
+    <!-- Accent -->
+    <color name="accent_white">#FFFFFF</color>
+    <color name="accent_glyph">#E8E8E8</color>
+
+    <!-- Status colors -->
+    <color name="status_confirmed">#4ADE80</color>
+    <color name="status_preparing">#FBBF24</color>
+    <color name="status_on_the_way">#60A5FA</color>
+    <color name="status_at_door">#F87171</color>
+    <color name="status_idle">#444444</color>
+
+    <!-- Buttons -->
+    <color name="btn_primary_bg">#FFFFFF</color>
+    <color name="btn_primary_text">#0D0D0D</color>
+    <color name="btn_secondary_bg">#1C1C1C</color>
+    <color name="btn_secondary_border">#2E2E2E</color>
+    <color name="btn_danger_text">#F87171</color>
+
+    <!-- Permission states -->
+    <color name="permission_active">#4ADE80</color>
+    <color name="permission_inactive">#F87171</color>
+</resources>
