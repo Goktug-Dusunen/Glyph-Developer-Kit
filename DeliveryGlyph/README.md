@@ -40,6 +40,19 @@ You can add any other delivery app from the Settings screen.
 | Phone (2a) Plus `23113` | A,B,C | C channel | A+B+C |
 | Phone (3a) / Pro `24111` | A,B,C | C channel | A+B+C |
 | **Phone (4a) `25111`** | **A (6 LEDs)** | Manual LED | A0–A5 |
+| **CMF Phone (1) `23112`** | **A,B,C + Matrix** | C channel + Matrix text | All + Matrix |
+| **Phone (4a) Pro `25111p`** | **A (6 LEDs) + Matrix** | Manual LED + Matrix text | A0–A5 + Matrix |
+
+### Glyph Matrix Display (CMF Phone 1 / Phone 4a Pro)
+
+Matrix-capable devices show delivery status as text on the LED matrix display simultaneously with the regular Glyph lights:
+
+| Stage | Matrix Display |
+|---|---|
+| Order confirmed | `ONAY` |
+| Preparing | `HAZR` |
+| On the way | `YOLDA` |
+| **At your door** | **`KAPI!`** |
 
 Phone (4a) fills the 6 A-channel LEDs from bottom to top:
 ```
@@ -81,7 +94,8 @@ Install the app → tap **Grant Permission** → enable Delivery Glyph in the No
 
 ## Features
 
-- Supports all Nothing Phone models (Phone 1 through Phone 4a)
+- Supports all Nothing Phone models (Phone 1 through Phone 4a Pro) + CMF Phone (1)
+- **Glyph Matrix integration** — CMF Phone 1 and Phone 4a Pro show delivery status as text on the LED matrix
 - Simultaneous multi-order tracking (e.g. Getir + Yemek Sepeti at the same time)
 - Blink speed setting — Fast / Normal / Slow
 - Custom app support — add any delivery app by package name

@@ -1,23 +1,28 @@
+
 /*
  * Delivery Glyph — Developer: Gdusunen
  *
  * Tracks delivery status per active order key (packageName:notificationId).
  * Returns the highest-priority status among all tracked orders.
+ * Thread-safe implementation.
  */
 package com.nothing.deliveryglyph
 
+import java.util.concurrent.ConcurrentHashMap
+
 object OrderTracker {
 
-    // key = "packageName:notificationId"
-    private val orders = mutableMapOf<String, DeliveryStatus>()
+    // Thread-safe map: key = "packageName:notificationId"
+    private val orders = ConcurrentHashMap<String, DeliveryStatus>()
 
+    @Volatile
     var onStatusChanged: ((DeliveryStatus) -> Unit)? = null
 
     fun update(key: String, status: DeliveryStatus) {
-        val prev = orders[key]
-        if (prev == status) return
-        orders[key] = status
-        onStatusChanged?.invoke(highestStatus())
+        val prev = orders.put(key, status)
+        if (prev != status) {
+            onStatusChanged?.invoke(highestStatus())
+        }
     }
 
     fun remove(key: String) {
@@ -36,4 +41,6 @@ object OrderTracker {
         orders.values.maxByOrNull { it.ordinal } ?: DeliveryStatus.IDLE
 
     fun getOrders(): Map<String, DeliveryStatus> = orders.toMap()
+    
+    fun getOrderCount(): Int = orders.size
 }

@@ -53,13 +53,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun detectDevice(): String = when {
-        Common.is20111() -> "Nothing Phone (1)"
-        Common.is22111() -> "Nothing Phone (2)"
-        Common.is23111() -> "Nothing Phone (2a)"
-        Common.is23113() -> "Nothing Phone (2a) Plus"
-        Common.is24111() -> "Nothing Phone (3a) / 3a Pro"
-        Common.is25111() -> "Nothing Phone (4a)"
-        else             -> "Bilinmeyen / Desteklenmeyen Cihaz"
+        Common.is20111()  -> "Nothing Phone (1)"
+        Common.is22111()  -> "Nothing Phone (2)"
+        Common.is23111()  -> "Nothing Phone (2a)"
+        Common.is23112()  -> "CMF Phone (1) — Glyph + Matrix"
+        Common.is23113()  -> "Nothing Phone (2a) Plus"
+        Common.is24111()  -> "Nothing Phone (3a) / 3a Pro"
+        Common.is25111()  -> "Nothing Phone (4a)"
+        Common.is25111p() -> "Nothing Phone (4a) Pro — Glyph + Matrix"
+        else              -> "Bilinmeyen / Desteklenmeyen Cihaz"
     }
 
     private fun isNotificationListenerEnabled(): Boolean {

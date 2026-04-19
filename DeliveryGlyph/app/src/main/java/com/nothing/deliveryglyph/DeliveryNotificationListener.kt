@@ -1,3 +1,4 @@
+
 /*
  * Delivery Glyph — Developer: Gdusunen
  */
@@ -11,7 +12,8 @@ import android.util.Log
 
 class DeliveryNotificationListener : NotificationListenerService() {
 
-    private lateinit var glyphManager: GlyphDeliveryManager
+    private var glyphManager: GlyphDeliveryManager? = null
+    private var matrixManager: GlyphMatrixDeliveryManager? = null
     private val handler = Handler(Looper.getMainLooper())
 
     // key="pkg:notifId" → handler runnable (AT_DOOR zamanlayıcı)
@@ -21,13 +23,27 @@ class DeliveryNotificationListener : NotificationListenerService() {
         super.onCreate()
         AppSettings.init(applicationContext)
 
-        glyphManager = GlyphDeliveryManager(applicationContext)
-        glyphManager.init()
+        glyphManager = GlyphDeliveryManager(applicationContext).apply { init() }
 
-        // OrderTracker değişikliklerini Glyph'e yansıt
+        matrixManager = GlyphMatrixDeliveryManager(applicationContext).apply {
+            if (isSupported()) init()
+        }
+
+        // OrderTracker değişikliklerini Glyph ve Matrix'e yansıt
         OrderTracker.onStatusChanged = { newStatus ->
             val speed = AppSettings.getBlinkSpeed()
-            glyphManager.applyStatus(newStatus, speed)
+
+            val gm = glyphManager
+            if (gm?.isReady() == true) {
+                gm.applyStatus(newStatus, speed)
+            } else {
+                Log.w(TAG, "Glyph hazır değil, durum atlanıyor: $newStatus")
+            }
+
+            val mm = matrixManager
+            if (mm?.isSupported() == true && mm.isReady()) {
+                mm.applyStatus(newStatus, speed)
+            }
         }
 
         Log.d(TAG, "DeliveryNotificationListener başlatıldı")
@@ -35,9 +51,15 @@ class DeliveryNotificationListener : NotificationListenerService() {
 
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
+        synchronized(resetRunnables) {
+            resetRunnables.clear()
+        }
         OrderTracker.onStatusChanged = null
         OrderTracker.clearAll()
-        glyphManager.destroy()
+        glyphManager?.destroy()
+        glyphManager = null
+        matrixManager?.destroy()
+        matrixManager = null
         super.onDestroy()
     }
 
@@ -48,8 +70,8 @@ class DeliveryNotificationListener : NotificationListenerService() {
         if (!isEnabledPackage(pkg)) return
 
         val extras = sbn.notification?.extras ?: return
-        val title = extras.getString("android.title")
-        val text  = extras.getCharSequence("android.text")?.toString()
+        val title = extras.getString("android.title") ?: ""
+        val text  = extras.getCharSequence("android.text")?.toString() ?: ""
 
         Log.d(TAG, "[$pkg] title=\"$title\" | text=\"$text\"")
 
@@ -57,18 +79,23 @@ class DeliveryNotificationListener : NotificationListenerService() {
         Log.d(TAG, "Tespit: $status")
 
         val orderKey = "$pkg:${sbn.id}"
+        
+        // Önceki zamanlayıcıyı iptal et (aynı sipariş için yeni güncelleme)
+        cancelScheduledRemoval(orderKey)
+        
         OrderTracker.update(orderKey, status)
 
         // Geçmişe yaz
         val appLabel = DeliveryParser.ALL_APPS.firstOrNull { it.packageName == pkg }?.displayName
             ?: AppSettings.getCustomApps().firstOrNull { it.packageName == pkg }?.displayName
             ?: pkg
+        
         AppSettings.appendHistory(
             NotificationEvent(
                 timestampMs       = System.currentTimeMillis(),
                 packageName       = pkg,
                 appLabel          = appLabel,
-                notificationTitle = title ?: "",
+                notificationTitle = title,
                 statusLabel       = status.label
             )
         )
@@ -84,10 +111,10 @@ class DeliveryNotificationListener : NotificationListenerService() {
         if (!isEnabledPackage(pkg)) return
 
         val orderKey = "$pkg:${sbn.id}"
-        cancelScheduledRemoval(orderKey)
-
-        // 5 sn gecikme ile temizle (aynı sipariş için yeni bildirim gelebilir)
-        scheduleOrderRemoval(orderKey, 5_000L)
+        
+        // Hemen temizleme yapma, kısa bir gecikme ile
+        // (aynı sipariş için hemen yeni bildirim gelebilir)
+        scheduleOrderRemoval(orderKey, 3_000L)
     }
 
     // ─── Helpers ─────────────────────────────────────────────────────────────
@@ -100,19 +127,30 @@ class DeliveryNotificationListener : NotificationListenerService() {
 
     private fun scheduleOrderRemoval(key: String, delayMs: Long) {
         cancelScheduledRemoval(key)
+        
         val runnable = Runnable {
-            resetRunnables.remove(key)
-            OrderTracker.remove(key)
-            if (OrderTracker.highestStatus() == DeliveryStatus.IDLE) {
-                glyphManager.reset()
+            synchronized(resetRunnables) {
+                // Sadece bu runnable hâlâ map'te ise çalıştır (güvenlik için)
+                if (resetRunnables.remove(key) != null) {
+                    OrderTracker.remove(key)
+                    if (OrderTracker.highestStatus() == DeliveryStatus.IDLE) {
+                        glyphManager?.reset()
+                        matrixManager?.reset()
+                    }
+                }
             }
         }
-        resetRunnables[key] = runnable
+        
+        synchronized(resetRunnables) {
+            resetRunnables[key] = runnable
+        }
         handler.postDelayed(runnable, delayMs)
     }
 
     private fun cancelScheduledRemoval(key: String) {
-        resetRunnables.remove(key)?.let { handler.removeCallbacks(it) }
+        synchronized(resetRunnables) {
+            resetRunnables.remove(key)?.let { handler.removeCallbacks(it) }
+        }
     }
 
     companion object {
