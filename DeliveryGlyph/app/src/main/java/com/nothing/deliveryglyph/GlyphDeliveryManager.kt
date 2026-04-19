@@ -212,7 +212,7 @@ class GlyphDeliveryManager(private val context: Context) {
                     .buildInterval(speed.interval).build()
 
             // Phone (2a) / (2a Plus) — A, B, C
-            Common.is23111(), Common.is23113() ->
+            Common.is23111() || Common.is23113() ->
                 builder
                     .buildChannelA().buildChannelB().buildChannelC()
                     .buildPeriod(speed.period).buildCycles(speed.cycles)
@@ -226,7 +226,7 @@ class GlyphDeliveryManager(private val context: Context) {
                     .buildInterval(speed.interval).build()
 
             // Phone (4a) / (4a Pro) — Sadece A (index 0-5)
-            Common.is25111(), Common.is25111p() ->
+            Common.is25111() || Common.is25111p() ->
                 builder
                     .buildChannel(0).buildChannel(1).buildChannel(2)
                     .buildChannel(3).buildChannel(4).buildChannel(5)

@@ -59,10 +59,11 @@ class SettingsActivity : AppCompatActivity() {
             val row = makeSwitchRow(
                 label      = app.displayName,
                 checked    = AppSettings.isAppEnabled(app.packageName),
-                removable  = false
-            ) { isChecked ->
-                AppSettings.setAppEnabled(app.packageName, isChecked)
-            }
+                removable  = false,
+                onChange   = { isChecked ->
+                    AppSettings.setAppEnabled(app.packageName, isChecked)
+                }
+            )
             llAppSwitches.addView(row)
         }
     }
